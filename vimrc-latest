@@ -1,0 +1,249 @@
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-markdown'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'hhvm/vim-hack'
+Plugin 'ervandew/supertab'
+Plugin 'majutsushi/tagbar'
+Plugin 'mattn/emmet-vim'
+Plugin 'justinmk/vim-sneak'
+Plugin 'Chiel92/vim-autoformat'
+Plugin 'severin-lemaignan/vim-minimap'
+Plugin 'dsawardekar/wordpress.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mbbill/undotree'
+Plugin 'mhinz/vim-startify'
+Plugin 'tpope/vim-repeat'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'Lokaltog/powerline'
+Plugin 'fisadev/vim-ctrlp-cmdpalette'
+Plugin 'Townk/vim-autoclose'
+Plugin 'fisadev/dragvisuals.vim'
+Plugin 'fisadev/FixedTaskList.vim'
+Plugin 'kien/tabman.vim'
+Plugin 'lilydjwg/colorizer'
+
+" colorschemes
+Plugin 'flazz/vim-colorschemes'
+" molokai colorscheme
+Plugin 'tomasr/molokai'
+" personal wiki/diary/tasks
+Plugin 'vimwiki/vimwiki'
+" status and tabline
+Plugin 'vim-airline/vim-airline'
+" airline themes
+Plugin 'vim-airline/vim-airline-themes'
+" directory tree for vim
+Plugin 'scrooloose/nerdtree'
+" validation scripts
+Plugin 'scrooloose/syntastic'
+" edit surrounding tags
+Plugin 'tpope/vim-surround'
+" git wrapper
+Plugin 'tpope/vim-fugitive'
+" vim commentary
+Plugin 'tpope/vim-commentary'
+" file finder
+Plugin 'ctrlpvim/ctrlp.vim'
+" vim snippets
+Plugin 'honza/vim-snippets'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+"vim autocompletion
+Plugin 'valloric/youcompleteme'
+"vim easymotion
+Plugin 'easymotion/vim-easymotion'
+" sublime multiple cursors
+Plugin 'terryma/vim-multiple-cursors'
+" edit tabs
+Plugin 'gcmt/taboo.vim'
+" ack for vim
+Plugin 'mileszs/ack.vim'
+" nerdtree tabs
+Plugin 'jistr/vim-nerdtree-tabs'
+
+call vundle#end()
+
+filetype plugin indent on
+
+" GENERAL "
+set history=500
+set autoread
+
+let mapleader=","
+let g:mapleader=","
+
+" Fast saving
+nmap <leader>w :w!<cr>
+
+" Vim User Interface "
+set so=7
+
+set wildmenu
+set ruler
+set cmdheight=2
+set hid
+colorscheme molokai
+
+set number
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+set ignorecase
+
+set smartcase
+set incsearch
+set lazyredraw
+set magic
+set showmatch
+set mat=2
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+set foldcolumn=1
+set exrc
+set encoding=utf8
+
+inoremap jj <Esc>
+inoremap jk <Esc>
+
+" Colors and Fonts 
+syntax enable
+set background=dark
+try
+set guifont=Consolas\ 12
+catch
+endtry
+
+if has("gui_running")
+	set guioptions-=T
+	set guioptions-=e
+	set t_Co=256
+	set guitablabel=%M\%t
+endif
+
+set ffs=unix,dos,mac
+
+" Text tab and indent
+set expandtab
+set smarttab
+set shiftwidth=4
+set tabstop=4
+set lbr
+set tw=500
+set ai
+set si
+set wrap
+set completeopt-=preview
+set directory=~/.vim/dirs/temp
+set backup
+set backupdir=~/.vim/dirs/backup
+set undofile
+set undodir=~/.vim/dirs/undo
+
+" create directories if they don't exists
+if !isdirectory(&backupdir)
+    call mkdir(&backupdir,"p")
+endif
+if !isdirectory(&directory)
+    call mkdir(&directory,"p")
+endif
+if !isdirectory(&undodir)
+    call mkdir(&undodir,"p")
+endif
+
+" Moving around
+map <space> /
+map <c-space> ?
+map <silent><leader><cr> :noh<cr>
+
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-l> <C-W>l
+map <C-h> <C-W>h
+
+" Copy to system clipboad
+vnoremap <C-c> "cy<esc>:!echo -n '<C-R>c' \|<space>xclip<CR><enter>"
+
+map <leader>bd :BClose<cr>:tabclose<cr>gT
+
+map <leader>ba :bufdo bd<cr>
+map <leader>l :bnext<cr>
+map <leader>h :bprevious<cr>
+
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tq :tabclose<cr>
+map <leader>tm :tabmove
+map <leader>t<leader> :tabnext
+
+let g:lasttab = 1
+nmap <leader>tl :exe "tabn".g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()
+
+map <leader>te :tabedit<c-r>=expand("%:p:h")<cr>
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+
+try
+    set switchbuf=useopen,usetab,newtab
+    set stal=2
+catch
+endtry
+
+" Files and Backup
+set nobackup
+set nowb
+set noswapfile
+
+" Statusline
+set laststatus=2
+
+" Airline
+let g:airline_theme = 'badwolf'
+let g:airline_powerline_fonts = 1
+let g:airline_left_sep='>>'
+let g:airline_right_sep='<<'
+let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#fnamemod=':t'
+
+" NerdTree
+let NERDTreeHighlightCursorline=1
+let NERDTreeIgnore=['\~$','.*\.pyc']
+let NERDTreeMinimalUI=1
+let NERDTreeDirArrows=1
+let NERDChristmasTree=1
+let NERDTreeChDirMode=2
+let NERDTreeMapJumpFirstChild='gK'
+nmap <leader>nn :NERDTreeToggle<CR>
+set scrolloff=3
+set sidescrolloff=15
+set splitbelow
+set splitright
+
+command! BClose call <SID>BufcloseCloseIt()
+	function! <SID>BufcloseCloseIt()
+	let l:currentBufNm = bufnr("%")
+	let l:alternateBufNum = bufnr("#")
+
+	if buflisted(l:alternateBufNum)
+	    buffer #
+	else
+	    bnext
+	endif
+
+	if bufnr("%") == l:currentBufNum
+	new
+	endif
+
+	if buflisted(l:currentBufNum)
+	execute("bdelete! ".l:currentBufNum)
+	endif
+	endfunction
